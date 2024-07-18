@@ -1,7 +1,7 @@
 <div class='content-wrapper transparent' id='home'>
     <div class='messages'></div>
     <header>
-        <h1><%- ctx.name %></h1>
+        <h2>The <%- ctx.name %> Project</h2>
     </header>
     <% if (ctx.canListPosts) { %>
         <form class='horizontal'>

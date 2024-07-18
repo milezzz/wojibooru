@@ -37,7 +37,7 @@
                     %>commented <%= ctx.makeRelativeTime(ctx.comment ? ctx.comment.creationTime : null) %><%
                 %></span><%
 
-                %><wbr><%
+                %><br/><%
 
                 %><span class='score-container'></span><%
 

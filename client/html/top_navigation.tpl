@@ -1,8 +1,8 @@
 <nav id='top-navigation' class='buttons'><!--
     --><ul><!--
         --><button id="mobile-navigation-toggle"><!--
-            --><span class="site-name"><%- ctx.name %></span><!--
             --><span class="toggle-icon"><i class="fa fa-bars"></i></span><!--
+            --><span class="site-name"><img src="data/img/logo.png" height="62px" style="vertical-align: bottom"/></span><!--
         --></button><!--
         --><% for (let item of ctx.items) { %><!--
             --><% if (item.available) { %><!--

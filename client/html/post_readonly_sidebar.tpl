@@ -1,7 +1,7 @@
 <div class='readonly-sidebar'>
     <article class='details'>
         <section class='download'>
-            <a rel='external' href='<%- ctx.post.contentUrl %>'>
+		<a rel='external' href='<%- ctx.post.contentUrl %>'>
                 <i class='fa fa-download'></i><!--
             --><%= ctx.makeFileSize(ctx.post.fileSize) %> <!--
                 --><%- {
@@ -38,6 +38,10 @@
             </section>
         <% } %>
 
+        <section class='buttons'>
+           <a rel='external' href='<%- ctx.post.contentUrl %>' class='button-link'><i class='fa fa-download'></i>&nbspDownload</a>
+        </section>
+
         <section class='zoom'>
             <a href class='fit-original'>Original zoom</a> &middot;
             <a href class='fit-width'>fit width</a> &middot;
@@ -55,10 +59,10 @@
         <% } %>
 
         <section class='search'>
-            Search on
-            <a href='http://iqdb.org/?url=<%- encodeURIComponent(ctx.post.fullContentUrl) %>'>IQDB</a> &middot;
-            <a href='https://danbooru.donmai.us/posts?tags=md5:<%- ctx.post.checksumMD5 %>'>Danbooru</a> &middot;
-            <a href='https://www.google.com/searchbyimage?&image_url=<%- encodeURIComponent(ctx.post.fullContentUrl) %>'>Google Images</a>
+            Search:
+            <a href='https://www.google.com/searchbyimage?sbisrc=4chanx&image_url=<%- encodeURIComponent(ctx.post.fullContentUrl) %>'>Google</a> &middot;
+            <a href='https://www.bing.com/images/search?view=detailv2&iss=sbi&form=SBIIRP&sbisrc=UrlPaste&q=imgurl:<%- encodeURIComponent(ctx.post.fullContentUrl) %>'>Bing</a> &middot;
+            <a href='https://saucenao.com/search.php?url=<%- encodeURIComponent(ctx.post.fullContentUrl) %>'>SauceNAO</a>
         </section>
 
         <section class='social'>
@@ -84,7 +88,7 @@
     <% } %>
 
     <nav class='tags'>
-        <h1>Tags (<%- ctx.post.tags.length %>)</h1>
+        <h2>Tags (<%- ctx.post.tags.length %>)</h2>
         <% if (ctx.post.tags.length) { %>
             <ul class='compact-tags'><!--
                 --><% for (let tag of ctx.post.tags) { %><!--

@@ -1,6 +1,8 @@
 # User-specific configuration
 config.yaml
 .env
+server/config.yaml
+docker-compose.yml
 
 # Client Development Artifacts
 */*_modules/
@@ -13,3 +15,7 @@ server/**/lib/
 server/**/bin/
 server/**/pyvenv.cfg
 __pycache__/
+
+#Images & DB
+sql
+data

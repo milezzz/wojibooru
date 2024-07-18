@@ -1,8 +1,8 @@
 <div class='post-content post-type-<%- ctx.post.type %>'>
     <% if (['image', 'animation'].includes(ctx.post.type)) { %>
 
-        <img class='resize-listener' alt='' src='<%- ctx.post.contentUrl %>'/>
-
+        <img id='postImage' class='resize-listener' alt='' src='<%- ctx.post.contentUrl %>'/>
+        <button id='copyImageButton' class='button-left'><i class="fa fa-copy"></i>&nbsp;Copy</button>
     <% } else if (ctx.post.type === 'flash') { %>
 
         <object class='resize-listener' width='<%- ctx.post.canvasWidth %>' height='<%- ctx.post.canvasHeight %>' data='<%- ctx.post.contentUrl %>'>
