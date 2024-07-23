@@ -1,7 +1,4 @@
-<p>Szurubooru is an image board engine inspired by services such as Danbooru,
-Gelbooru and Moebooru. Its name <a href='http://sjp.pwn.pl/sjp/;2527372'>has
-its roots in Polish language and has onomatopeic meaning of scraping or
-scrubbing</a>. It is pronounced as <em>shoorubooru</em>.</p>
+<p>The Wojak Database or WojakDB aims to end the drought on high quality Wojaks with the Universe's best searchable repository of everyone's favorite doomer. Please read the rules before posting here but the main rule is DO NOT upload low quality Wojaks.</p>
 
 <p class='section'><strong>Registration</strong></p>
 

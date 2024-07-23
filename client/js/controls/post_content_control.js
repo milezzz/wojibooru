@@ -169,8 +169,8 @@ class PostContentControl {
 	const copyImageButton = document.getElementById('copyImageButton');
 	const postImage = document.getElementById('postImage');
 
-	console.log('copyImageButton:', copyImageButton);
-	console.log('postImage:', postImage);
+	// console.log('copyImageButton:', copyImageButton);
+	// console.log('postImage:', postImage);
 
 	// Hide the button if the user is on an iOS device or using Safari
 	if (isIOSOrSafari()) {
@@ -208,7 +208,6 @@ class PostContentControl {
 					copyImageButton.innerHTML = '<i class="fa fa-copy"></i>&nbsp;Copy';
 					copyImageButton.classList.remove('button-success');
 				}, 3000); // Revert after 3 seconds
-
 			} catch (e) {
 				alert(`Error: ${e.message}`);
 			}
