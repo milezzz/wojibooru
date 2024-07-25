@@ -60,9 +60,9 @@
 
         <section class='search'>
             Search:
-            <a href='https://www.google.com/searchbyimage?sbisrc=4chanx&image_url=<%- encodeURIComponent(ctx.post.fullContentUrl) %>'>Google</a> &middot;
-            <a href='https://www.bing.com/images/search?view=detailv2&iss=sbi&form=SBIIRP&sbisrc=UrlPaste&q=imgurl:<%- encodeURIComponent(ctx.post.fullContentUrl) %>'>Bing</a> &middot;
-            <a href='https://saucenao.com/search.php?url=<%- encodeURIComponent(ctx.post.fullContentUrl) %>'>SauceNAO</a>
+            <a href='https://www.google.com/searchbyimage?sbisrc=4chanx&image_url=<%- encodeURIComponent(ctx.post.fullContentUrl) %>' target='_blank'>Google</a> &middot;
+            <a href='https://www.bing.com/images/search?view=detailv2&iss=sbi&form=SBIIRP&sbisrc=UrlPaste&q=imgurl:<%- encodeURIComponent(ctx.post.fullContentUrl) %>' target='_blank'>Bing</a> &middot;
+            <a href='https://www.tineye.com/search?sort=size&order=desc&url=<%- encodeURIComponent(ctx.post.fullContentUrl) %>' target='_blank'>TinEye</a>
         </section>
 
         <section class='social'>
