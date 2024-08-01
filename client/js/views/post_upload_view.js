@@ -8,10 +8,6 @@ const FileDropperControl = require("../controls/file_dropper_control.js");
 const template = views.getTemplate("post-upload");
 const rowTemplate = views.getTemplate("post-upload-row");
 
-const misc = require('../util/misc.js');
-const TagAutoCompleteControl =
-    require('../controls/tag_auto_complete_control.js');
-
 function _mimeTypeToPostType(mimeType) {
     return (
         {
@@ -190,15 +186,8 @@ class PostUploadView extends events.EventTarget {
         );
         this._formNode.classList.add("inactive");
 
-        if (this._commonTagsInputNode) {
-            this._autoCompleteControl = new TagAutoCompleteControl(
-                this._commonTagsInputNode,
-                {
-                    confirm: tag =>
-                        this._autoCompleteControl.replaceSelectedText(
-                            misc.escapeSearchTerm(tag.names[0]), true),
-                });
-        }
+        // Add event listener for paste events
+        document.addEventListener("paste", (e) => this._handlePaste(e));
     }
 
     enableForm() {
@@ -313,18 +302,14 @@ class PostUploadView extends events.EventTarget {
             uploadable.safety = safetyNode.value;
         }
 
-        let anonymous = this._uploadAllAnonymous.checked;
-        if (!anonymous) {
-            anonymous = rowNode.querySelector(".anonymous input:checked");
+        const anonymousNode = rowNode.querySelector(
+            ".anonymous input:checked"
+        );
+        if (anonymousNode) {
+            uploadable.anonymous = true;
         }
-        uploadable.anonymous = anonymous;
 
         uploadable.tags = [];
-        if (this._commonTagsInputNode) {
-            var tags = this._commonTagsInputNode.value.split(' ');
-            tags = tags.filter(t => t != "").map(t => t.replace('\\', ''));
-            uploadable.tags = uploadable.tags.concat(tags);
-        }
         uploadable.relations = [];
         for (let [i, lookalike] of uploadable.lookalikes.entries()) {
             let lookalikeNode = rowNode.querySelector(
@@ -431,6 +416,23 @@ class PostUploadView extends events.EventTarget {
         );
     }
 
+    // Paste controls
+    _handlePaste(e) {
+        const items = e.clipboardData.items;
+        for (let item of items) {
+            if (item.kind === "file" && item.type.startsWith("image/")) {
+                const file = item.getAsFile();
+                if (this._isSupportedImageFormat(file.type)) {
+                    this.addUploadables([new File(file)]);
+                }
+            }
+        }
+    }
+
+    _isSupportedImageFormat(mimeType) {
+        return ["image/jpeg", "image/png", "image/jpg"].includes(mimeType);
+    }
+    // End Paste controls
     get _uploading() {
         return this._formNode.classList.contains("uploading");
     }
@@ -459,10 +461,6 @@ class PostUploadView extends events.EventTarget {
         );
     }
 
-    get _uploadAllAnonymous() {
-        return this._hostNode.querySelector("form [name=upload-all-anonymous]");
-    }
-
     get _submitButtonNode() {
         return this._hostNode.querySelector("form [type=submit]");
     }
@@ -473,10 +471,6 @@ class PostUploadView extends events.EventTarget {
 
     get _contentInputNode() {
         return this._formNode.querySelector(".dropper-container");
-    }
-
-    get _commonTagsInputNode() {
-        return this._formNode.querySelector('form [name=common-tags]');
     }
 }
 
