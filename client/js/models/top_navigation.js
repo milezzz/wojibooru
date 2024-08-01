@@ -90,6 +90,8 @@ function _makeTopNavigation() {
     ret.add("login", new TopNavigationItem("L", "Log in", "login"));
     ret.add("logout", new TopNavigationItem("O", "Logout", "logout"));
     ret.add("help", new TopNavigationItem("E", "Help", "help"));
+    ret.add("discord", new TopNavigationItem(null, "<i class='fa-brands fa-discord'></i>", "https://rarewojak.com/discord"));
+    ret.add("xcom", new TopNavigationItem(null, "<i class='fa-brands fa-x-twitter'></i>", "https://x.com/rare_wojak"));
     ret.add(
         "settings",
         new TopNavigationItem(null, "<i class='fa fa-cog'></i>", "settings")

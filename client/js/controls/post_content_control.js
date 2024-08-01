@@ -3,12 +3,17 @@
 // Include the copy image clipboard library
 const CopyImageClipboard = function(n){"use strict";function t(n,t,o,e){return new(o||(o=Promise))((function(i,r){function c(n){try{a(e.next(n))}catch(n){r(n)}}function u(n){try{a(e.throw(n))}catch(n){r(n)}}function a(n){var t;n.done?i(n.value):(t=n.value,t instanceof o?t:new o((function(n){n(t)}))).then(c,u)}a((e=e.apply(n,t||[])).next())}))}function o(n){return t(this,void 0,void 0,(function*(){const t=yield fetch(`${n}`);return yield t.blob()}))}function e(n){return n.type.includes("jpeg")}function i(n){return n.type.includes("png")}function r(n){return t(this,void 0,void 0,(function*(){return new Promise((function(t,o){const e=document.createElement("img");e.crossOrigin="anonymous",e.src=n,e.onload=function(n){const o=n.target;t(o)},e.onabort=o,e.onerror=o}))}))}function c(n){return t(this,void 0,void 0,(function*(){return new Promise((function(t,o){const e=document.createElement("canvas"),i=e.getContext("2d");if(i){const{width:r,height:c}=n;e.width=r,e.height=c,i.drawImage(n,0,0,r,c),e.toBlob((function(n){n?t(n):o("Cannot get blob from image element")}),"image/png",1)}}))}))}function u(n){return t(this,void 0,void 0,(function*(){const t=URL.createObjectURL(n),o=yield r(t);return yield c(o)}))}function a(n){return t(this,void 0,void 0,(function*(){const t={[n.type]:n},o=new ClipboardItem(t);yield navigator.clipboard.write([o])}))}return n.canCopyImagesToClipboard=function(){var n;const t="undefined"!=typeof fetch,o="undefined"!=typeof ClipboardItem,e=!!(null===(n=null===navigator||void 0===navigator?void 0:navigator.clipboard)||void 0===n?void 0:n.write);return t&&o&&e},n.convertBlobToPng=u,n.copyBlobToClipboard=a,n.copyImageToClipboard=function(n){return t(this,void 0,void 0,(function*(){const t=yield o(n);if(e(t)){const n=yield u(t);return yield a(n),t}if(i(t))return yield a(t),t;throw new Error("Cannot copy this type of image to clipboard")}))},n.createImageElement=r,n.getBlobFromImageElement=c,n.getBlobFromImageSource=o,n.isJpegBlob=e,n.isPngBlob=i,n.requestClipboardWritePermission=function(){var n;return t(this,void 0,void 0,(function*(){if(!(null===(n=null===navigator||void 0===navigator?void 0:navigator.permissions)||void 0===n?void 0:n.query))return!1;const{state:t}=yield navigator.permissions.query({name:"clipboard-write"});return"granted"===t}))},n}({});
 
-// Detect iOS
-function isIOSOrSafari() {
-    const userAgent = navigator.userAgent;
-    const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
-    const isSafari = /^((?!chrome|android).)*safari/i.test(userAgent);
-    return isIOS || isSafari;
+// Detect Android, iOS
+function isMobileDevice() {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    return /android|iPad|iPhone|iPod/i.test(userAgent);
+}
+
+// Detect PNG or JPG
+function isSupportedImageFormat(imageUrl) {
+    const supportedFormats = ['image/png', 'image/jpeg', 'image/jpg'];
+    const extension = imageUrl.split('.').pop().toLowerCase();
+    return supportedFormats.includes(`image/${extension}`);
 }
 
 const settings = require("../models/settings.js");
@@ -172,46 +177,47 @@ class PostContentControl {
 	// console.log('copyImageButton:', copyImageButton);
 	// console.log('postImage:', postImage);
 
-	// Hide the button if the user is on an iOS device or using Safari
-	if (isIOSOrSafari()) {
-		if (copyImageButton) {
-			copyImageButton.style.display = 'none';
-		}
-		return;
-	}
+        // Hide on Android + Safari
+        if (isMobileDevice() || !isSupportedImageFormat(postImage.src)) {
+            if (copyImageButton) {
+                copyImageButton.style.display = 'none';
+            }
+            return;
+        }
+        
+        if (copyImageButton && postImage) {
+            copyImageButton.addEventListener('click', async () => {
+                try {
+                    if (!navigator.clipboard) {
+                        throw new Error('Clipboard API not supported');
+                    }
 
-	if (copyImageButton && postImage) {
-		copyImageButton.addEventListener('click', async () => {
-			try {
-				if (!navigator.clipboard) {
-					throw new Error('Clipboard API not supported');
-				}
+                    const imageUrl = postImage.src;
+                    const response = await fetch(imageUrl);
+                    const blob = await response.blob();
 
-				const imageUrl = postImage.src;
-				const response = await fetch(imageUrl);
-				const blob = await response.blob();
+                    let clipboardBlob = blob;
+                    if (blob.type === 'image/jpeg') {
+                        clipboardBlob = await CopyImageClipboard.convertBlobToPng(blob);
+                    }
 
-				let clipboardBlob = blob;
-				if (blob.type === 'image/jpeg') {
-					clipboardBlob = await CopyImageClipboard.convertBlobToPng(blob);
-				}
+                    const clipboardItem = new ClipboardItem({ [clipboardBlob.type]: clipboardBlob });
+                    await navigator.clipboard.write([clipboardItem]);
 
-				const clipboardItem = new ClipboardItem({ [clipboardBlob.type]: clipboardBlob });
-				await navigator.clipboard.write([clipboardItem]);
+                    // Change button text and color on success
+                    copyImageButton.innerHTML = '<i class="fa fa-check"></i>&nbsp;Snagged!';
+                    copyImageButton.classList.add('button-success');
 
-				// Change button text and color on success
-				copyImageButton.innerHTML = '<i class="fa fa-check"></i>&nbsp;Snagged!';
-				copyImageButton.classList.add('button-success');
+                    // Optionally, revert the button text and color after a delay
+                    setTimeout(() => {
+                        copyImageButton.innerHTML = '<i class="fa fa-copy"></i>&nbsp;Copy';
+                        copyImageButton.classList.remove('button-success');
+                    }, 2200); // Revert after 2.2 seconds
 
-				// Optionally, revert the button text and color after a delay
-				setTimeout(() => {
-					copyImageButton.innerHTML = '<i class="fa fa-copy"></i>&nbsp;Copy';
-					copyImageButton.classList.remove('button-success');
-				}, 3000); // Revert after 3 seconds
-			} catch (e) {
-				alert(`Error: ${e.message}`);
-			}
-		});
+                } catch (e) {
+                    alert(`Error: ${e.message}`);
+                }
+            });
 
         } else {
             console.error('Copy image button or post image not found');

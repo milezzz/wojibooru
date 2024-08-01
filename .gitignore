@@ -7,6 +7,9 @@ docker-compose.yml
 # Client Development Artifacts
 */*_modules/
 client/public
+client/node_modules
+./node_modules/*
+*/* package-lock.json
 
 # Server Development Artifacts
 .coverage
@@ -19,3 +22,8 @@ __pycache__/
 #Images & DB
 sql
 data
+
+#Extra OS shit
+.DS_Store
+.DS_Store?
+._*

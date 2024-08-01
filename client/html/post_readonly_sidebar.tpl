@@ -2,8 +2,8 @@
     <article class='details'>
         <section class='download'>
 		<a rel='external' href='<%- ctx.post.contentUrl %>'>
-                <i class='fa fa-download'></i><!--
-            --><%= ctx.makeFileSize(ctx.post.fileSize) %> <!--
+                <i class='fa-solid fa-download'></i><!--
+            -->&nbsp;&nbsp;<%= ctx.makeFileSize(ctx.post.fileSize) %> <!--
                 --><%- {
                     'image/gif': 'GIF',
                     'image/jpeg': 'JPEG',
@@ -33,13 +33,13 @@
 
         <% if (ctx.enableSafety) { %>
             <section class='safety'>
-                <i class='fa fa-circle safety-<%- ctx.post.safety %>'></i><!--
-                --><%- ctx.post.safety[0].toUpperCase() + ctx.post.safety.slice(1) %>
+                <i class='fa-solid fa-circle safety-<%- ctx.post.safety %>'></i><!--
+                -->&nbsp;&nbsp;<%- ctx.post.safety[0].toUpperCase() + ctx.post.safety.slice(1) %>
             </section>
         <% } %>
 
         <section class='buttons'>
-           <a rel='external' href='<%- ctx.post.contentUrl %>' class='button-link'><i class='fa fa-download'></i>&nbspDownload</a>
+           <a rel='external' href='<%- ctx.post.contentUrl %>' class='button-link'><i class='fa-solid fa-download'></i>&nbsp;Download</a>
         </section>
 
         <section class='zoom'>
@@ -95,9 +95,9 @@
                     --><li><!--
                         --><% if (ctx.canViewTags) { %><!--
                         --><a href='<%- ctx.formatClientLink('tag', tag.names[0]) %>' class='<%= ctx.makeCssName(tag.category, 'tag') %>'><!--
-                            --><i class='fa fa-tag'></i><!--
+                            --><i class='fa-solid fa-tag'></i><!--
                         --><% } %><!--
-                        --><% if (ctx.canViewTags) { %><!--
+                        -->&nbsp;<% if (ctx.canViewTags) { %><!--
                             --></a><!--
                         --><% } %><!--
                         --><% if (ctx.canListPosts) { %><!--
