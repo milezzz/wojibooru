@@ -58,12 +58,17 @@ class TopNavigationController {
                 topNavigation.hide("register");
             }
             topNavigation.hide("login");
+// Update the favorites link
+        const favoritesItem = topNavigation.get("favorites");
+        favoritesItem.url = `https://wojakdb.com/posts/query=fav%3A${api.userName}`;
+        favoritesItem.available = true;
         } else {
             if (!api.hasPrivilege("users:create:self")) {
                 topNavigation.hide("register");
             }
             topNavigation.hide("account");
             topNavigation.hide("logout");
+            topNavigation.hide("favorites"); // These hidden when logged out
         }
 
 // Show Discord and X.com links

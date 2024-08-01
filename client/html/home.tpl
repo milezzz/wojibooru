@@ -2,6 +2,7 @@
     <div class='messages'></div>
     <header>
         <h2>The <%- ctx.name %> Project</h2>
+        <p>Only the finest HD Wojaks</p>
     </header>
     <% if (ctx.canListPosts) { %>
         <form class='horizontal'>

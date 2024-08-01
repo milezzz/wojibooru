@@ -74,14 +74,14 @@ class Touch {
 
         this._xStart = null;
         this._yStart = null;
-        this._direction = direction.NONE;
 
+        this._direction = direction.NONE;
         this._target.addEventListener("touchstart", (evt) => {
             handleTouchStart(this, evt);
-        });
+        }, { passive: true });
         this._target.addEventListener("touchmove", (evt) => {
             handleTouchMove(this, evt);
-        });
+        }, { passive: true });
         this._target.addEventListener("touchend", () => {
             handleTouchEnd(this);
         });
