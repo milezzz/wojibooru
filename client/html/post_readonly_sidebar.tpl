@@ -74,7 +74,7 @@
 
     <% if (ctx.post.relations.length) { %>
         <nav class='relations'>
-            <h1>Relations (<%- ctx.post.relations.length %>)</h1>
+            <h2>Relations (<%- ctx.post.relations.length %>)</h2>
             <ul><!--
                 --><% for (let post of ctx.post.relations) { %><!--
                     --><li><!--

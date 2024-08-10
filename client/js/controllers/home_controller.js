@@ -9,7 +9,7 @@ const HomeView = require("../views/home_view.js");
 class HomeController {
     constructor() {
         topNavigation.activate("home");
-        topNavigation.setTitle("Home");
+        topNavigation.setTitle("Only the Finest HD Wojaks");
 
         this._homeView = new HomeView({
             name: api.getName(),
