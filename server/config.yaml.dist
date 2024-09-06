@@ -172,8 +172,8 @@ privileges:
 ## ONLY SET THESE IF DEPLOYING OUTSIDE OF DOCKER
 #debug: 0 # generate server logs?
 #show_sql: 0 # show sql in server logs?
-#data_url: /data/
-#data_dir: /var/www/data
+data_url: /data/
+data_dir: /var/www/wojakdb.com/data
 ## usage: schema://user:password@host:port/database_name
 ## example: postgres://szuru:dog@localhost:5432/szuru_test
 #database:

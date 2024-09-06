@@ -53,21 +53,21 @@
         <div class='post-container'></div>
 
         <% if (ctx.editMode && ctx.canEditPostDescription) { %>
-            <h2>Description</h2>
+            <h2>Description:</h2>
             <%= ctx.makeTextarea({
                 id: 'post-description',
                 value: ctx.post.description,
             }) %>
         <% } else if (ctx.post.description != undefined) { %>
             <div class='description-container'>
-                <h2>Description</h2>
-                <%= ctx.makeMarkdown(ctx.post.description) %>
+                <h2>Description:</h2>
+                <span class='description-text'><%= ctx.makeMarkdown(ctx.post.description) %></span>
             </div>
         <% } %>
 
         <div class='after-mobile-controls'>
         <% if (ctx.canCreateComments) { %>
-            <h2>Add comment</h2>
+            <h2>Got a Comment?</h2>
             <div class='comment-form-container'></div>
         <% } %>
 
@@ -75,9 +75,6 @@
             <div class='comments-container'></div>
         <% } %>
 
-            <% if (ctx.canListComments) { %>
-                <div class='comments-container'></div>
-            <% } %>
         </div>
     </div>
 </div>
