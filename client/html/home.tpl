@@ -2,7 +2,7 @@
     <div class='messages'></div>
     <header>
         <h2><%- ctx.name %> Project</h2>
-        <p>Only the finest HD Wojaks</p>
+        <p>Largest image board of HD Wojaks on teh interwebz. See <a href='/tags/query=sort%3Ausages' alt='All Tags'>all tags</a>.</p>
     </header>
     <% if (ctx.canListPosts) { %>
         <form class='horizontal'>

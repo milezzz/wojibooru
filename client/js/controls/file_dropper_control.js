@@ -19,7 +19,7 @@ class FileDropperControl extends events.EventTarget {
             lock: options.lock,
             id: "file-" + Math.random().toString(36).substring(7),
             urlPlaceholder:
-                options.urlPlaceholder || "Alternatively, paste an URL here.",
+                options.urlPlaceholder || "Alternatively, paste an image or URL here.",
         });
 
         this._dropperNode = source.querySelector(".file-dropper");
@@ -56,7 +56,7 @@ class FileDropperControl extends events.EventTarget {
         }
 
         document.onpaste = (e) => {
-            if (!document.querySelector(".file-dropper")) return;
+            if (!document.getElementById("post-upload")) return;
             this._evtPaste(e)
         }
 
@@ -140,7 +140,7 @@ class FileDropperControl extends events.EventTarget {
     
         if (!this._options.allowMultiple && fileList.length > 1) {
             window.alert("Cannot select multiple files.");
-        } else {
+        } else if (fileList.length > 0) {
             this._emitFiles(fileList);
         }
     }

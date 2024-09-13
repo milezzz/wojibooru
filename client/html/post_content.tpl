@@ -33,6 +33,6 @@
     </div>
     
     <section class='buttons'>
-        <button id='copyImageButton' class='button-left'><i class="fa fa-copy"></i>&nbsp;Copy</button>
+        <button id='copyImageButton' class='button-left'><i class="fa-solid fa-copy"></i>&nbsp;Copy</button>
     </section>
 </div>

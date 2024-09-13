@@ -15,13 +15,14 @@
             margin: 0 auto 2em auto
 
     form
-        font-size: 1.25em
+        font-size: 1em
         display: inline-block
         width: auto
         vertical-align: middle
         margin: 0 0 2em 0
         text-align: left
-        white-space: nowrap
+        line-break: auto
+        white-space: wrap
         input
             width: auto
         .sep
@@ -30,6 +31,9 @@
     form                    
         @media (max-width: 500px)
              font-size: 1.0em
+        
+    p
+        font-size: 1.25em
         
     .post-container
         margin-bottom: 2em
@@ -72,3 +76,11 @@
         margin-top: 10px
         line-break: auto
         white-space: wrap
+
+    .cc_img
+        display: block
+        margin: auto
+        margin-top: 2em
+        
+    h2
+        color: #008900

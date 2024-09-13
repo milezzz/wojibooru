@@ -21,8 +21,8 @@
             --></a>
             (<%- ctx.post.canvasWidth %>x<%- ctx.post.canvasHeight %>)
             <% if (ctx.post.flags.length) { %><!--
-                --><% if (ctx.post.flags.includes('loop')) { %><i class='fa fa-repeat'></i><% } %><!--
-                --><% if (ctx.post.flags.includes('sound')) { %><i class='fa fa-volume-up'></i><% } %>
+                --><% if (ctx.post.flags.includes('loop')) { %><i class='fa-solid fa-repeat'></i><% } %><!--
+                --><% if (ctx.post.flags.includes('sound')) { %><i class='fa-solid fa-volume-high'></i><% } %>
             <% } %>
         </section>
 
