@@ -1,8 +1,8 @@
-<p><strong>Anonymous tokens</strong></p>
+<h2 class='section'>Anonymous tokens</h2>
 
 <p>Same as <code>name</code> token.</p>
 
-<p><strong>Named tokens</strong></p>
+<h2 class='section'>Named tokens</h2>
 
 <table>
     <tbody>
@@ -61,7 +61,7 @@
     </tbody>
 </table>
 
-<p><strong>Sort style tokens</strong></p>
+<h2 class='section'>Sort style tokens</h2>
 
 <table>
     <tbody>
@@ -124,6 +124,6 @@
     </tbody>
 </table>
 
-<p><strong>Special tokens</strong></p>
+<h2 class='section'>Special tokens</h2>
 
 <p>None.</p>

@@ -83,7 +83,7 @@ by negating the whole token.</p>
 <p>You can escape special characters such as <code>:</code> and <code>-</code>
 by prepending them with a backslash: <code>\\</code>.</p>
 
-<h1>Example</h1>
+<h2 class='section'>Example</h2>
 
 <p>Searching for posts with following query:</p>
 

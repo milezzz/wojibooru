@@ -1,6 +1,6 @@
-<p>By accessing <%- ctx.name %> (&ldquo;Site&rdquo;) you agree to the following
-Terms of Service. If you do not agree to these terms, then please do not access
-the Site.</p>
+<p>By accessing <%- ctx.name %> (&ldquo;WojakDB.com&rdquo;) you agree to the following
+Terms of Service. If you do not agree to these terms, then please do not access 
+WojakDB.com.</p>
 
 <ul>
     <li>The Site is presented to you AS IS, without any warranty, express or
@@ -17,7 +17,7 @@ the Site.</p>
     stumble upon.</li>
 </ul>
 
-<p class='section' id='section-prohibited-content'><strong>Prohibited content</strong></p>
+<h2 class='section' id='section-prohibited-content'>Prohibited Content</h2>
 
 <ul>
     <li>Child pornography: any photograph or photorealistic drawing or movie
@@ -28,15 +28,12 @@ the Site.</p>
     depicts humans having sex (either explicit or implied) with other non-human
     animals.</li>
 
-    <li>Any depiction of extreme mutilation, extreme bodily distension,
-    feces.</li>
-
     <li>Personal images: any image that is suspected to be uploaded for
-    personal use. This includes, but is not limited to, avatars and forum
-    signatures.</li>
+    harassment purposes. This includes, but is not limited to, minor children, and 
+    images of actual people who are not celebrities or public personalities.</li>
 </ul>
 
-<p class='section' id='section-privacy-policy'><strong>Privacy policy</strong></p>
+<h2 class='section' id='section-privacy-policy'>Privacy Policy</h2>
 
 <p>The Site will not disclose the IP address or email address of any user
 except to the staff.</p>

@@ -1,8 +1,8 @@
 <div class='content-wrapper transparent' id='home'>
     <div class='messages'></div>
     <header>
-        <h2><%- ctx.name %> Project</h2>
-        <p>Largest image board of HD Wojaks on teh interwebz. See <a href='/tags/query=sort%3Ausages' alt='All Tags'>all tags</a>.</p>
+        <h2><%- ctx.name %> Project™</h2>
+        <p>Largest image board of HD Wojaks on teh interwebz. See <a href='/tags/query=sort%3Ausages' alt='All Tags'>all tags</a></p>
     </header>
     <% if (ctx.canListPosts) { %>
         <form class='horizontal'>
