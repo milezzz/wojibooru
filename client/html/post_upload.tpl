@@ -2,7 +2,7 @@
     <form>
         <div class='dropper-container'></div>
 
-        <div class='control-strip'>
+        <div class='control-strip upload-controls'>
             <input type='submit' value='Upload all' class='submit'/>
 
             <div class='control-options'>

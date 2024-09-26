@@ -12,10 +12,20 @@ const misc = require('../util/misc.js');
 const TagAutoCompleteControl =
     require('../controls/tag_auto_complete_control.js');
 
+function isDisallowedFileType(mimeType) {
+        const disallowedTypes = [
+            "video/mp4",
+            "video/webm",
+            "video/quicktime",
+            "application/x-shockwave-flash"
+        ];
+        return disallowedTypes.includes(mimeType);
+    }
+
 function _mimeTypeToPostType(mimeType) {
     return (
         {
-            "application/x-shockwave-flash": "flash",
+            // "application/x-shockwave-flash": "flash",
             "image/gif": "image",
             "image/jpeg": "image",
             "image/png": "image",
@@ -24,9 +34,9 @@ function _mimeTypeToPostType(mimeType) {
             "image/avif": "image",
             "image/heif": "image",
             "image/heic": "image",
-            "video/mp4": "video",
-            "video/webm": "video",
-            "video/quicktime": "video",
+            // "video/mp4": "video",
+            // "video/webm": "video",
+            // "video/quicktime": "video",
         }[mimeType] || "unknown"
     );
 }
@@ -115,7 +125,7 @@ class Url extends Uploadable {
 
     get mimeType() {
         let mime = {
-            swf: "application/x-shockwave-flash",
+            // swf: "application/x-shockwave-flash",
             jpg: "image/jpeg",
             png: "image/png",
             gif: "image/gif",
@@ -124,9 +134,9 @@ class Url extends Uploadable {
             avif: "image/avif",
             heif: "image/heif",
             heic: "image/heic",
-            mp4: "video/mp4",
-            mov: "video/quicktime",
-            webm: "video/webm",
+            //mp4: "video/mp4",
+            //mov: "video/quicktime",
+            //webm: "video/webm",
         };
         for (let extension of Object.keys(mime)) {
             if (this.url.toLowerCase().indexOf("." + extension) !== -1) {
@@ -169,7 +179,7 @@ class PostUploadView extends events.EventTarget {
             this._contentInputNode,
             {
                 extraText:
-                    "Allowed extensions: .jpg, .png, .gif, .webm, .mp4, .swf, .avif, .heif, .heic",
+                    "Allowed extensions: .jpg, .png, .gif, .avif, .heif, .heic",
                 allowUrls: true,
                 allowMultiple: true,
                 lock: false,
@@ -189,7 +199,8 @@ class PostUploadView extends events.EventTarget {
             this._evtFormSubmit(e)
         );
         this._formNode.classList.add("inactive");
-
+        this._updateUploadControlsVisibility(); // Hide Upload All on disallowed file types
+        
         if (this._commonTagsInputNode) {
             this._autoCompleteControl = new TagAutoCompleteControl(
                 this._commonTagsInputNode,
@@ -237,11 +248,19 @@ class PostUploadView extends events.EventTarget {
     addUploadables(uploadables) {
         this._formNode.classList.remove("inactive");
         let duplicatesFound = 0;
+        let disallowedFound = false; // Added for disallowed file type
+        
         for (let uploadable of uploadables) {
             if (this._uploadables.find(uploadable) !== -1) {
                 duplicatesFound++;
                 continue;
             }
+            // ADD CHECK FOR DISALLOWED FILE TYPES
+            if (isDisallowedFileType(uploadable.mimeType)) {
+                disallowedFound = true;
+                this.showError(`File type ${uploadable.mimeType} is not allowed.`, uploadable);
+                continue;
+            } // END
             this._uploadables.push(uploadable);
             this._emit("change");
             this._renderRowNode(uploadable);
@@ -249,6 +268,8 @@ class PostUploadView extends events.EventTarget {
                 this._updateThumbnailNode(e.detail.uploadable)
             );
         }
+            this._updateUploadControlsVisibility();
+        
         if (duplicatesFound) {
             let message = null;
             if (duplicatesFound < uploadables.length) {
@@ -261,6 +282,9 @@ class PostUploadView extends events.EventTarget {
                 message = "These files were already added.";
             }
             alert(message);
+        }
+        if (disallowedFound) {
+            this.showError("Some files were not added due to unsupported file types.");
         }
     }
 
@@ -276,6 +300,8 @@ class PostUploadView extends events.EventTarget {
             this._formNode.classList.add("inactive");
             this._submitButtonNode.value = "Upload all";
         }
+        // Update upload controls visibility
+        this._updateUploadControlsVisibility();
     }
 
     updateUploadable(uploadable) {
@@ -283,8 +309,29 @@ class PostUploadView extends events.EventTarget {
         this._renderRowNode(uploadable);
     }
 
+    // Update upload controls visibility
+    _updateUploadControlsVisibility() {
+        const hasDisallowedFiles = this._uploadables.some(uploadable => isDisallowedFileType(uploadable.mimeType));
+        const hasAllowedFiles = this._uploadables.some(uploadable => !isDisallowedFileType(uploadable.mimeType));
+        
+        const controlStrip = this._hostNode.querySelector('.control-strip');
+        if (hasDisallowedFiles || !hasAllowedFiles) {
+            controlStrip.style.display = 'none';
+        } else {
+            controlStrip.style.display = 'block';
+        }
+    }
+
     _evtFilesAdded(e) {
-        this.addUploadables(e.detail.files.map((file) => new File(file)));
+        const allowedFiles = e.detail.files.filter(file => !isDisallowedFileType(file.type));
+        const disallowedFiles = e.detail.files.filter(file => isDisallowedFileType(file.type));
+        
+        if (disallowedFiles.length > 0) {
+            const fileTypes = disallowedFiles.map(file => file.name.split('.').pop()).join(', ');
+            this.showError(`The following file types are not allowed: ${fileTypes}. Please remove these files and try again.`);
+        }
+        
+        this.addUploadables(allowedFiles.map((file) => new File(file)));
     }
 
     _evtUrlsAdded(e) {

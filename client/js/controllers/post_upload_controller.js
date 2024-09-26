@@ -11,6 +11,16 @@ const Tag = require("../models/tag.js");
 const PostUploadView = require("../views/post_upload_view.js");
 const EmptyView = require("../views/empty_view.js");
 
+function isDisallowedFileType(uploadable) {
+    const disallowedTypes = [
+        "video/mp4",
+        "video/webm",
+        "video/quicktime",
+        "application/x-shockwave-flash"
+    ];
+    return disallowedTypes.includes(uploadable.mimeType);
+}
+
 const genericErrorMessage =
     "One or more posts needs your attention; " +
     'click "resume upload" when you\'re ready.';
@@ -57,7 +67,16 @@ class PostUploadController {
         this._view.clearMessages();
         let anyFailures = false;
 
-        e.detail.uploadables
+        const allowedUploadables = e.detail.uploadables.filter(uploadable => !isDisallowedFileType(uploadable));
+        const disallowedUploadables = e.detail.uploadables.filter(uploadable => isDisallowedFileType(uploadable));
+        
+        if (disallowedUploadables.length > 0) {
+            const fileTypes = disallowedUploadables.map(uploadable => uploadable.name.split('.').pop()).join(', ');
+            this._view.showError(`The following file types are not allowed: ${fileTypes}. `);
+            anyFailures = true;
+        }
+        
+        allowedUploadables
             .reduce(
                 (promise, uploadable) =>
                     promise.then(() =>

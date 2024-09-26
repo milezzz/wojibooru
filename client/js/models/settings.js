@@ -9,7 +9,7 @@ const defaultSettings = {
         unsafe: false,
     },
     upscaleSmallPosts: true,
-    endlessScroll: false,
+    endlessScroll: true,
     keyboardShortcuts: true,
     transparencyGrid: false,
     fitMode: "fit-both",

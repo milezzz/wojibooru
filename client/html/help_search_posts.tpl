@@ -43,10 +43,6 @@
             <td>having given source URL (accepts wildcards)</td>
         </tr>
         <tr>
-            <td><code>pool</code></td>
-            <td>belonging to the pool with the given ID</td>
-        </tr>
-        <tr>
             <td><code>tag-count</code></td>
             <td>having given number of tags</td>
         </tr>

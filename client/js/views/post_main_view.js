@@ -107,12 +107,12 @@ class PostMainView {
             postContainerNode,
             () => {
                 if (!ctx.editMode) {
-                    showPreviousImage();
+                    showNextImage();
                 }
             },
             () => {
                 if (!ctx.editMode) {
-                    showNextImage();
+                    showPreviousImage();
                 }
             }
         );
